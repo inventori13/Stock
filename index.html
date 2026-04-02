@@ -101,68 +101,22 @@
       #custom-notification.active { display: block; }
       
       /* MONITORING TABLE SPECIFIC */
-      .monitoring-table { 
-        border-collapse: collapse; 
-        border-spacing: 0; 
-        font-size: 11px; 
-        width: max-content;
-        min-width: 100%; 
-        color: #000;
-      }
-      .monitoring-table th, .monitoring-table td { 
-        border: 1px solid #cbd5e1; 
-        padding: 6px 10px;
-        text-align: center;
-        vertical-align: middle; 
-      }
-      
-      /* HEADER STICKY */
-      .monitoring-table thead th { 
-        position: sticky; 
-        top: 0;
-        background: #f8fafc; 
-        font-weight: 700; 
-        border-bottom: 2px solid #94a3b8; 
-        z-index: 20; 
-        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-      }
-      
-      /* COLUMN STICKY */
-      .sticky-col { 
-        position: sticky; 
-        left: 0; 
-        background: white; 
-        z-index: 10; 
-        border-right: 1px solid #cbd5e1; 
-      }
-      
-      .monitoring-table thead th.sticky-col {
-        z-index: 30; 
-      }
-      
+      .monitoring-table { border-collapse: collapse; border-spacing: 0; font-size: 11px; width: max-content; min-width: 100%; color: #000; }
+      .monitoring-table th, .monitoring-table td { border: 1px solid #cbd5e1; padding: 6px 10px; text-align: center; vertical-align: middle; }
+      .monitoring-table thead th { position: sticky; top: 0; background: #f8fafc; font-weight: 700; border-bottom: 2px solid #94a3b8; z-index: 20; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+      .sticky-col { position: sticky; left: 0; background: white; z-index: 10; border-right: 1px solid #cbd5e1; }
+      .monitoring-table thead th.sticky-col { z-index: 30; }
       .sticky-col.col-seg { left: 220px; } 
-      .sticky-col.col-type { 
-        left: 300px;
-        border-right: 8px solid #f1f5f9; 
-      } 
-      
-      /* Helper Classes */
+      .sticky-col.col-type { left: 300px; border-right: 8px solid #f1f5f9; } 
       .row-header { text-align: left !important; padding-left: 8px; font-weight: 600; background: #fff; white-space: nowrap; }
       .col-header-date { min-width: 70px; background: #f8fafc; }
       .val-zak { color: #000; font-weight: 500; font-size: 12px; }
       .row-balance { background-color: #f0fdf4; font-weight: bold; }
       .row-capacity { background-color: #fffbeb; }
       .row-percent { font-weight: bold; color: #000; }
-      
       .input-inline { width: 100%; border: none; border-bottom: 1px dotted #999; padding: 2px; text-align: right; font-size: 11px; background: transparent; }
       .input-inline:focus { outline: none; border-bottom: 1px solid blue; background: #fff; }
-
-      /* Spacer Row */
-      .spacer-row td {
-        border: none !important;
-        background-color: #f1f5f9; 
-        height: 15px;
-      }
+      .spacer-row td { border: none !important; background-color: #f1f5f9; height: 15px; }
 
       /* VIRTUAL WAREHOUSE 3D STYLES */
       .wh-3d-wrapper { display: flex; flex-direction: column; gap: 20px; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; height: 600px; }
@@ -209,11 +163,11 @@
       <div class="login-card">
         <div class="login-header"><div class="login-logo"><div class="logo-icon-box"><i class="fas fa-box-open"></i></div>Inventory Management System</div></div>
         <form id="loginForm">
-          <div class="form-group"><label class="form-label">Username/Email</label><input type="text" id="username" class="login-input" placeholder="Gunakan 'admin' untuk demo" required></div>
-          <div class="form-group"><label class="form-label">Kata Sandi</label><div class="input-wrapper"><input type="password" id="password" class="login-input" placeholder="Gunakan 'admin' untuk demo" required><i class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility()"></i></div></div>
-          <div class="form-group"><div class="captcha-group"><canvas id="captcha-canvas" width="120" height="42" title="Klik untuk refresh"></canvas><input type="text" id="captcha-input" class="login-input" placeholder="Kode Keamanan" required></div><small style="color:#999; font-size:11px; cursor:pointer;" onclick="generateCaptcha()">klik gambar untuk ubah kode</small></div>
+          <div class="form-group"><label class="form-label">Username/Email</label><input type="text" id="username" class="login-input" placeholder="Gunakan 'admin' untuk akses" required></div>
+          <div class="form-group"><label class="form-label">Kata Sandi</label><div class="input-wrapper"><input type="password" id="password" class="login-input" placeholder="Gunakan 'admin' untuk akses" required><i class="fas fa-eye-slash toggle-password" onclick="window.togglePasswordVisibility()"></i></div></div>
+          <div class="form-group"><div class="captcha-group"><canvas id="captcha-canvas" width="120" height="42" title="Klik untuk refresh" onclick="window.generateCaptcha()"></canvas><input type="text" id="captcha-input" class="login-input" placeholder="Kode Keamanan" required></div><small style="color:#999; font-size:11px; cursor:pointer;" onclick="window.generateCaptcha()">klik gambar untuk ubah kode</small></div>
           <button type="submit" class="btn-login">Login</button>
-          <div class="login-footer"><p style="margin: 15px 0 5px; text-align: center; color: #6b7280; font-size: 12px;">Demo Mode Active. No real backend required.</p></div>
+          <div class="login-footer"><p style="margin: 15px 0 5px; text-align: center; color: #6b7280; font-size: 12px;">Data Disimpan di Firebase Firestore.</p></div>
           <div id="login-message" style="margin-top:15px; color:var(--danger); text-align:center; font-weight:600;"></div>
         </form>
       </div>
@@ -223,14 +177,15 @@
     <!-- VIEW 2: APP -->
     <div id="app-view" class="app-container hidden-by-js">
       <header>
-        <div class="brand-group"><div class="brand"><span style="background:var(--primary); color:white; padding:4px 8px; border-radius:6px;">IMS</span> Inventory Management System</div><button class="logout-btn" onclick="logout()">Logout</button></div>
+        <div class="brand-group"><div class="brand"><span style="background:var(--primary); color:white; padding:4px 8px; border-radius:6px;">IMS</span> Inventory Management System</div><button class="logout-btn" onclick="window.logout()">Logout</button></div>
         <nav class="nav-tabs">
-          <button class="nav-btn active" id="nav-entry" data-role="transaksi" onclick="switchPage('entry')">Transaksi</button>
-          <button class="nav-btn" id="nav-report" data-role="laporan" onclick="switchPage('report')">Laporan</button>
-          <button class="nav-btn" id="nav-monitoring" data-role="laporan" onclick="switchPage('monitoring')">Monitoring</button>
-          <button class="nav-btn" id="nav-master" data-role="master" onclick="switchPage('master')">Master Data</button>
-          <button class="nav-btn" id="nav-warehouse" data-role="warehouse" onclick="switchPage('warehouse')">Virtual WH (FIFO)</button>
-          <button class="nav-btn" id="nav-dashboard" data-role="dashboard" onclick="switchPage('dashboard')">Dashboard</button>
+          <button class="nav-btn active" id="nav-entry" data-role="transaksi" onclick="window.switchPage('entry')">Transaksi</button>
+          <button class="nav-btn" id="nav-report" data-role="laporan" onclick="window.switchPage('report')">Laporan</button>
+          <button class="nav-btn" id="nav-monitoring" data-role="laporan" onclick="window.switchPage('monitoring')">Monitoring</button>
+          <button class="nav-btn" id="nav-master" data-role="master" onclick="window.switchPage('master')">Master Data</button>
+          <button class="nav-btn" id="nav-warehouse" data-role="warehouse" onclick="window.switchPage('warehouse')">Virtual WH (FIFO)</button>
+          <button class="nav-btn" id="nav-dashboard" data-role="dashboard" onclick="window.switchPage('dashboard')">Dashboard</button>
+          <button class="nav-btn" id="nav-admin" data-role="full access" onclick="window.switchPage('admin')"><i class="fas fa-cog"></i> Admin</button>
         </nav>
       </header>
 
@@ -243,8 +198,8 @@
               <div><label>Tanggal</label><input type="date" id="date"></div>
               <div><label>Tipe Transaksi</label>
                 <select id="transType">
-                  <option value="Output Production">Output Production</option>
-                  <option value="Delivery">Delivery</option>
+                  <option value="Output Production">Output Production (Inbound)</option>
+                  <option value="Delivery">Delivery (Outbound)</option>
                   <option value="Selling In (DC)">Selling In (DC)</option>
                   <option value="Sample">Sample</option>
                   <option value="Promo">Promo</option>
@@ -257,8 +212,8 @@
           <div style="margin-bottom: 20px;">
             <div style="font-weight:700; margin-bottom:10px; color:var(--text-muted); font-size:12px;">2. DETAIL BARANG</div>
             <div class="form-row">
-              <div><label>Segment</label><select id="segment" onchange="filterSKU()"><option value="">Pilih Segment</option><option value="Retail">Retail</option><option value="Project">Project</option><option value="General">General</option></select></div>
-              <div><label>SKU</label><select id="sku" onchange="autoFillDesc()" disabled><option>Pilih SKU</option></select></div>
+              <div><label>Segment</label><select id="segment" onchange="window.filterSKU()"><option value="">Pilih Segment</option><option value="Retail">Retail</option><option value="Project">Project</option><option value="General">General</option></select></div>
+              <div><label>SKU</label><select id="sku" onchange="window.autoFillDesc()" disabled><option>Pilih SKU</option></select></div>
             </div>
             <div class="form-row"><div style="grid-column: 1/-1;"><label>Deskripsi</label><input type="text" id="desc" readonly style="background:#f1f5f9;"></div></div>
             <div class="form-row">
@@ -266,11 +221,11 @@
               <div><label>Lot Number</label><input type="text" id="lot" placeholder="Contoh: A-123"></div>
             </div>
             <div class="form-row"><div><label>Qty (Unit)</label><input type="number" id="qty" min="1" placeholder="0"></div></div>
-            <button onclick="addItemToList()" class="btn-add">+ Tambah Item ke Keranjang</button>
+            <button type="button" onclick="window.addItemToList()" class="btn-add">+ Tambah Item ke Keranjang</button>
           </div>
           <div style="font-weight:700; margin-bottom:10px; color:var(--text-muted); font-size:12px;">3. KERANJANG DRAFT</div>
           <div class="table-wrapper"><table id="transactionTable"><thead><tr><th>SKU</th><th>Desc</th><th>BIN</th><th>Lot</th><th>Qty</th><th>Aksi</th></tr></thead><tbody><tr id="emptyRow"><td colspan="6" style="text-align:center; color:#999; padding:20px;">Keranjang kosong</td></tr></tbody></table></div>
-          <button id="btnSubmitAll" onclick="submitAll()" class="btn-primary" disabled>Simpan & Proses Transaksi</button>
+          <button id="btnSubmitAll" onclick="window.submitAll()" class="btn-primary" disabled>Simpan & Proses Transaksi</button>
         </div>
         <div class="card" style="border-top: 4px solid var(--success);"><h3>Riwayat Hari Ini</h3><div class="table-wrapper"><table id="todayTable"><thead><tr><th>Jam</th><th>Tipe</th><th>SKU</th><th>Desc</th><th>Qty</th></tr></thead><tbody></tbody></table></div></div>
       </section>
@@ -282,8 +237,8 @@
             <h2 style="font-size:18px; margin:0;">Laporan Stok On-Hand</h2>
             <div style="display:flex; gap:10px; align-items:center;">
               <input type="date" id="reportDate" style="padding:8px; border:1px solid #ccc; border-radius:8px;">
-              <button onclick="loadReportData()" class="btn-add" style="padding:8px 15px; width:auto;">Filter</button>
-              <button onclick="exportReportToExcel()" class="btn-primary" style="padding:8px 15px; width:auto; background:var(--success);"><i class="fas fa-file-excel"></i> Export XLS</button>
+              <button onclick="window.loadReportData()" class="btn-add" style="padding:8px 15px; width:auto;">Filter</button>
+              <button onclick="alert('Export Excel dapat ditambahkan menggunakan library SheetJS')" class="btn-primary" style="padding:8px 15px; width:auto; background:var(--success);"><i class="fas fa-file-excel"></i> Export XLS</button>
             </div>
           </div>
           <div class="table-wrapper"><table id="reportTable"><thead><tr><th>Segment</th><th>SKU</th><th>Desc</th><th style="text-align:right">Total Stok (Unit)</th><th style="text-align:center">Max Aging</th><th>Status</th></tr></thead><tbody><tr><td colspan="6" style="text-align:center;">Memuat...</td></tr></tbody></table></div>
@@ -306,7 +261,7 @@
                 <option value="6">Juli</option><option value="7">Agustus</option><option value="8">September</option><option value="9">Oktober</option><option value="10">November</option><option value="11">Desember</option>
               </select>
               <input type="number" id="monYear" placeholder="Tahun" style="width:80px; padding:8px; border:1px solid #ddd; border-radius:6px;" value="2025">
-              <button onclick="loadMonitoringData()" class="btn-add" style="padding:8px 15px; width:auto;">Load Data</button>
+              <button onclick="window.loadMonitoringData()" class="btn-add" style="padding:8px 15px; width:auto;">Load Data</button>
             </div>
           </div>
         </div>
@@ -317,8 +272,8 @@
                 Total Data: <span id="totalRecords">0</span> | Halaman: <span id="pageIndicator">1/1</span>
               </div>
               <div style="display:flex; gap:5px;">
-                <button onclick="prevPage()" class="btn-add" style="width:auto; padding:6px 12px; background:#94a3b8;">&lt; Back</button>
-                <button onclick="nextPage()" class="btn-add" style="width:auto; padding:6px 12px;">Next &gt;</button>
+                <button onclick="window.prevPage()" class="btn-add" style="width:auto; padding:6px 12px; background:#94a3b8;">&lt; Back</button>
+                <button onclick="window.nextPage()" class="btn-add" style="width:auto; padding:6px 12px;">Next &gt;</button>
               </div>
             </div>
             <table class="monitoring-table" id="monitoringTable">
@@ -364,9 +319,9 @@
             <div style="display:flex; gap:10px; align-items:center; width: 100%; max-width: 400px;">
               <div style="position:relative; width:100%;">
                 <i class="fas fa-search" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#94a3b8;"></i>
-                <input type="text" id="whSearch" placeholder="Cari ID Material (SKU/Lot)..." style="width:100%; padding:10px 10px 10px 35px; border-radius:20px; border:1px solid #cbd5e1; outline:none;" onkeyup="filterWarehouseTable()">
+                <input type="text" id="whSearch" placeholder="Cari ID Material (SKU/Lot)..." style="width:100%; padding:10px 10px 10px 35px; border-radius:20px; border:1px solid #cbd5e1; outline:none;" onkeyup="window.filterWarehouseTable()">
               </div>
-              <button onclick="loadWarehouseData()" class="btn-primary" style="padding:10px; width:40px; border-radius:50%; flex-shrink:0;"><i class="fas fa-sync"></i></button>
+              <button onclick="window.loadWarehouseData()" class="btn-primary" style="padding:10px; width:40px; border-radius:50%; flex-shrink:0;"><i class="fas fa-sync"></i></button>
             </div>
           </div>
           
@@ -423,15 +378,15 @@
             <h2 style="font-size:18px; margin:0;">Dashboard Overview & Analytics</h2>
             <div style="display:flex; gap:10px;">
               <select id="dashPeriod" style="padding:8px; border-radius:6px; border:1px solid #ddd;"><option value="monthly">Bulanan</option><option value="daily">Harian</option><option value="yearly">Tahunan</option></select>
-              <input type="date" id="dashDate" style="padding:8px; border:1px solid #ccc; border-radius:8px;"><button onclick="loadDashboard()" class="btn-add" style="padding:8px 15px; width:auto;">Filter</button>
+              <input type="date" id="dashDate" style="padding:8px; border:1px solid #ccc; border-radius:8px;"><button onclick="window.loadDashboard()" class="btn-add" style="padding:8px 15px; width:auto;">Filter</button>
             </div>
           </div>
         </div>
         <div class="dashboard-grid-top">
           <div class="metric-card"><div style="color:var(--text-muted); font-size:12px; font-weight:700;">TOTAL STOK FISIK</div><div class="metric-value" id="dash-total-stock">0</div><div class="progress-bar-bg"><div id="dash-util-bar" class="progress-bar-fill"></div></div><div style="font-size:11px; margin-top:5px; display:flex; justify-content:space-between;"><span id="dash-util-text">0%</span></div></div>
           <div class="metric-card"><div id="title-inbound-current" style="color:var(--text-muted); font-size:12px; font-weight:700;">INBOUND (CURRENT)</div><div class="metric-value" id="dash-inbound-current">0</div><div style="font-size:12px;"><span id="dash-growth-current-val">0%</span> <span id="dash-growth-current-label">vs Prev</span></div></div>
-          <div class="metric-card"><div id="title-inbound-ytd" style="color:var(--text-muted); font-size:12px; font-weight:700;">INBOUND (YEAR)</div><div class="metric-value" id="dash-inbound-ytd">0</div><div style="font-size:12px;"><span id="dash-growth-ytd-val">0%</span> vs Tahun Lalu</div></div>
-          <div class="metric-card"><div style="color:var(--text-muted); font-size:12px; font-weight:700;">ESTIMASI NILAI STOK</div><div class="metric-value" id="dash-total-value" style="font-size:22px;">Rp 0</div><div style="font-size:12px; color:#10b981;"><i class="fas fa-arrow-up"></i> 2.4% vs Bulan Lalu</div></div>
+          <div class="metric-card"><div id="title-inbound-ytd" style="color:var(--text-muted); font-size:12px; font-weight:700;">OUTBOUND (YEAR)</div><div class="metric-value" id="dash-inbound-ytd">0</div><div style="font-size:12px;"><span id="dash-growth-ytd-val">0%</span> vs Tahun Lalu</div></div>
+          <div class="metric-card"><div style="color:var(--text-muted); font-size:12px; font-weight:700;">ESTIMASI NILAI STOK</div><div class="metric-value" id="dash-total-value" style="font-size:22px;">Rp 0</div><div style="font-size:12px; color:#10b981;"><i class="fas fa-arrow-up"></i> Data Simulasi</div></div>
           <div class="metric-card"><div style="color:var(--text-muted); font-size:12px; font-weight:700;">ORDER FULFILLMENT</div><div class="metric-value" id="dash-fulfillment">0%</div><div style="font-size:12px; color:#64748b;">Target KPI: 98%</div></div>
         </div>
         <div class="charts-row">
@@ -442,13 +397,74 @@
           <div class="card" style="grid-column: 1 / -1;"><h3>Inventory Turnover Ratio (ITR)</h3><div class="chart-container" style="height:250px;"><canvas id="turnoverChart"></canvas></div></div>
         </div>
       </section>
+
+      <!-- PAGE: ADMIN -->
+      <section id="page-admin" class="page-section" data-role="full access">
+        <div class="card" style="margin-bottom: 20px;">
+           <h2 style="font-size:18px; margin-top:0;"><i class="fas fa-user-shield" style="color:var(--primary);"></i> Pengaturan Kredensial Admin</h2>
+           <p style="font-size:12px; color:var(--text-muted); margin-bottom:15px;">Ubah username dan password yang digunakan untuk masuk ke aplikasi. Kredensial baru akan tersimpan di Firestore.</p>
+           <div class="form-row">
+             <div><label>Username Baru</label><input type="text" id="newAdminUser" placeholder="Masukkan username baru"></div>
+             <div><label>Password Baru</label><input type="password" id="newAdminPass" placeholder="Masukkan password baru"></div>
+           </div>
+           <button onclick="window.saveAdminCreds()" class="btn-primary" style="width: auto; padding: 10px 20px; margin-top: 10px;">Simpan Kredensial</button>
+        </div>
+        
+        <div class="card">
+           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+              <h2 style="font-size:18px; margin:0;"><i class="fas fa-database" style="color:var(--secondary);"></i> Monitoring Storage Database</h2>
+              <button onclick="window.loadAdminStats()" class="btn-add" style="width: auto; padding: 8px 15px;"><i class="fas fa-sync"></i> Refresh Data</button>
+           </div>
+           <div class="dashboard-grid-top" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+              <div class="metric-card" style="padding: 15px;">
+                <div style="color:var(--text-muted); font-size:11px; font-weight:700;">DOCS MASTER DATA</div>
+                <div class="metric-value" id="stat-master" style="font-size:24px;">0</div>
+              </div>
+              <div class="metric-card" style="padding: 15px;">
+                <div style="color:var(--text-muted); font-size:11px; font-weight:700;">DOCS TRANSAKSI</div>
+                <div class="metric-value" id="stat-trans" style="font-size:24px;">0</div>
+              </div>
+              <div class="metric-card" style="padding: 15px;">
+                <div style="color:var(--text-muted); font-size:11px; font-weight:700;">DOCS WAREHOUSE</div>
+                <div class="metric-value" id="stat-wh" style="font-size:24px;">0</div>
+              </div>
+              <div class="metric-card" style="padding: 15px; border-left: 4px solid var(--primary);">
+                <div style="color:var(--text-muted); font-size:11px; font-weight:700;">ESTIMASI UKURAN</div>
+                <div class="metric-value" id="stat-size" style="font-size:24px;">0 KB</div>
+                <div style="font-size:11px; color:#10b981;">Batas Kuota Gratis: 1 GB (1.000.000 KB)</div>
+              </div>
+           </div>
+        </div>
+      </section>
     </div>
 
-    <script>
-      // ==========================================
-      // BACKEND MOCK API (Untuk Demo di GitHub Pages)
-      // Menggantikan fungsi google.script.run
-      // ==========================================
+    <!-- ========================================== -->
+    <!-- FIREBASE & MAIN LOGIC MODULE -->
+    <!-- ========================================== -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+      import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+      // 1. FIREBASE SETUP
+      const firebaseConfig = {
+        apiKey: "AIzaSyCvnbWbok1O4juPO5h8Qe0-5LG8QW3YoYc",
+        authDomain: "inventory-app-2026-66286.firebaseapp.com",
+        projectId: "inventory-app-2026-66286",
+        storageBucket: "inventory-app-2026-66286.firebasestorage.app",
+        messagingSenderId: "901007483230",
+        appId: "1:901007483230:web:b5f03433a73bf6a06c2fcf"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      
+      // Strict Path Rule Implementation
+      const appId = 'inventory-app-2026-66286'; // Fallback to project ID as appId for public space
+      const getCollectionPath = (collName) => `artifacts/${appId}/public/data/${collName}`;
+
+      // 2. MOCK DATA UNTUK AUTO-SEEDING JIKA DATABASE KOSONG
       const mockMasterDb = [
         {segment: 'Retail', sku: 'TV-001', desc: 'Smart TV 50 Inch 4K UHD', uom: 'Unit', weight: 12, minStock: 50, maxCap: 500},
         {segment: 'Retail', sku: 'HP-001', desc: 'Smartphone Pro Max 256GB', uom: 'Unit', weight: 0.2, minStock: 100, maxCap: 2000},
@@ -457,154 +473,278 @@
         {segment: 'General', sku: 'ACC-001', desc: 'Powerbank 10000mAh Fast Charge', uom: 'Pcs', weight: 0.3, minStock: 200, maxCap: 5000}
       ];
 
-      // Simulasi Data Stock Detail per Lot & BIN (Untuk Virtual Warehouse FIFO)
-      let mockWarehouseStock = [
-        { id: 1, bin: 'FG-A', sku: 'TV-001', desc: 'Smart TV 50 Inch 4K UHD', lot: 'LOT-2601-A', entryDate: '2026-01-10', qty: 20 },
-        { id: 2, bin: 'FG-A', sku: 'TV-001', desc: 'Smart TV 50 Inch 4K UHD', lot: 'LOT-2602-B', entryDate: '2026-02-15', qty: 30 },
-        { id: 3, bin: 'FG-B', sku: 'HP-001', desc: 'Smartphone Pro Max 256GB', lot: 'LOT-2512-C', entryDate: '2025-12-20', qty: 50 },
-        { id: 4, bin: 'FG-B', sku: 'HP-001', desc: 'Smartphone Pro Max 256GB', lot: 'LOT-2603-A', entryDate: '2026-03-01', qty: 150 },
-        { id: 5, bin: 'FG-C', sku: 'LAP-001', desc: 'Laptop Bisnis 14" i7 16GB', lot: 'LOT-2601-X', entryDate: '2026-01-05', qty: 15 },
-        { id: 6, bin: 'RACK', sku: 'ACC-001', desc: 'Powerbank 10000mAh Fast Charge', lot: 'LOT-2602-Y', entryDate: '2026-02-10', qty: 120 },
-        { id: 7, bin: 'RACK', sku: 'ACC-001', desc: 'Powerbank 10000mAh Fast Charge', lot: 'LOT-2602-Z', entryDate: '2026-02-28', qty: 200 }
+      const mockWarehouseStock = [
+        { bin: 'FG-A', sku: 'TV-001', desc: 'Smart TV 50 Inch 4K UHD', lot: 'LOT-2601-A', entryDate: '2026-01-10', qty: 20 },
+        { bin: 'FG-A', sku: 'TV-001', desc: 'Smart TV 50 Inch 4K UHD', lot: 'LOT-2602-B', entryDate: '2026-02-15', qty: 30 },
+        { bin: 'FG-B', sku: 'HP-001', desc: 'Smartphone Pro Max 256GB', lot: 'LOT-2512-C', entryDate: '2025-12-20', qty: 50 },
+        { bin: 'FG-B', sku: 'HP-001', desc: 'Smartphone Pro Max 256GB', lot: 'LOT-2603-A', entryDate: '2026-03-01', qty: 150 },
+        { bin: 'FG-C', sku: 'LAP-001', desc: 'Laptop Bisnis 14" i7 16GB', lot: 'LOT-2601-X', entryDate: '2026-01-05', qty: 15 },
+        { bin: 'RACK', sku: 'ACC-001', desc: 'Powerbank 10000mAh Fast Charge', lot: 'LOT-2602-Y', entryDate: '2026-02-10', qty: 120 },
+        { bin: 'RACK', sku: 'ACC-001', desc: 'Powerbank 10000mAh Fast Charge', lot: 'LOT-2602-Z', entryDate: '2026-02-28', qty: 200 }
       ];
 
-      let mockTodayTransactions = [];
+      // 3. FIREBASE API WRAPPER
+      const dbApi = {
+        checkLogin: async function(u, p, callback) {
+          // Rule 3: Auth Before Queries. Lakukan Anonymous Sign-in di background
+          try {
+            await signInAnonymously(auth);
+            
+            // Ambil kredensial kustom dari database Firestore
+            const credRef = doc(db, getCollectionPath('config'), 'adminCreds');
+            const credSnap = await getDoc(credRef);
+            
+            let validU = 'admin';
+            let validP = 'admin';
+            
+            if (credSnap.exists()) {
+               validU = credSnap.data().username;
+               validP = credSnap.data().password;
+            } else {
+               // Jika belum ada di database, buat pengaturan default
+               await setDoc(credRef, { username: 'admin', password: 'admin' });
+            }
 
-      const mockApi = {
-        checkLogin: function(u, p, callback) {
-          setTimeout(() => {
-            if(u === 'admin' && p === 'admin') callback({status: 'success', role: 'full access'});
-            else callback({status: 'error', message: 'Username/Password salah (Gunakan admin/admin)'});
-          }, 600);
+            if(u === validU && p === validP) callback({status: 'success', role: 'full access'});
+            else callback({status: 'error', message: 'Username/Password salah!'});
+          } catch (e) {
+            callback({status: 'error', message: 'Gagal koneksi Firebase Auth: ' + e.message});
+          }
         },
-        getMasterData: function(callback) {
-          setTimeout(() => callback(mockMasterDb), 300);
+
+        getMasterData: async function(callback) {
+          try {
+            const querySnapshot = await getDocs(collection(db, getCollectionPath('masterData')));
+            let data = [];
+            querySnapshot.forEach((doc) => { data.push({ id: doc.id, ...doc.data() }); });
+            
+            // Auto Seed if empty
+            if (data.length === 0 && auth.currentUser) {
+              console.log("Seeding Master Data...");
+              for (const item of mockMasterDb) {
+                 const docRef = await addDoc(collection(db, getCollectionPath('masterData')), item);
+                 data.push({ id: docRef.id, ...item });
+              }
+              // Seed Warehouse too
+              for (const stock of mockWarehouseStock) {
+                 await addDoc(collection(db, getCollectionPath('warehouseStock')), stock);
+              }
+            }
+            callback(data);
+          } catch (e) { console.error("Error getMasterData:", e); callback([]); }
         },
-        getTodayRecords: function(callback) {
-          setTimeout(() => callback(mockTodayTransactions), 200);
+
+        getTodayRecords: async function(callback) {
+          try {
+            const querySnapshot = await getDocs(collection(db, getCollectionPath('transactions')));
+            let data = [];
+            const today = new Date().toISOString().split('T')[0];
+            
+            querySnapshot.forEach((doc) => { 
+                let d = { id: doc.id, ...doc.data() };
+                // Filter today manually in JS (Rule 2: No Complex Queries)
+                if (d.date === today || d.date === undefined) { // if date undefined, assume today for mock reasons
+                   data.push(d); 
+                }
+            });
+            // Sort in memory
+            data.sort((a,b) => (b.timestamp || 0) - (a.timestamp || 0));
+            callback(data);
+          } catch (e) { console.error(e); callback([]); }
         },
-        submitData: function(payload, callback) {
-          setTimeout(() => {
+
+        submitData: async function(payload, callback) {
+          try {
             const now = new Date();
             const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-            payload.items.forEach(item => {
-              mockTodayTransactions.unshift({
+            
+            for (const item of payload.items) {
+              // 1. Simpan Transaksi
+              await addDoc(collection(db, getCollectionPath('transactions')), {
+                date: payload.date || now.toISOString().split('T')[0],
                 time: timeStr,
+                timestamp: now.getTime(),
                 type: payload.transType,
                 sku: item.sku,
                 desc: item.desc,
                 qty: item.qty
               });
-            });
+
+              // 2. Update Warehouse Stock (Inbound logic)
+              if (payload.transType.includes('Inbound') || payload.transType.includes('Production')) {
+                await addDoc(collection(db, getCollectionPath('warehouseStock')), {
+                  bin: item.bin,
+                  sku: item.sku,
+                  desc: item.desc,
+                  lot: item.lot || 'AUTO-LOT',
+                  entryDate: payload.date || now.toISOString().split('T')[0],
+                  qty: item.qty
+                });
+              } else {
+                 // Outbound (Simple mockup: we don't strict-deduct here because we have actionPickFifo)
+                 // But in a real app, we would query the warehouseStock and deduct FIFO automatically.
+              }
+            }
             callback({status: 'success'});
-          }, 800);
+          } catch (e) { console.error(e); callback({status: 'error'}); }
         },
-        getReportData: function(date, callback) {
-          setTimeout(() => {
-            let summary = mockMasterDb.map(item => ({
-              segment: item.segment, sku: item.sku, desc: item.desc,
-              qty: Math.floor(Math.random() * 4000) + 100,
-              maxAge: Math.floor(Math.random() * 45) + ' hari',
-              status: Math.random() > 0.7 ? '> 30 Hari (Warning)' : 'Aman'
-            }));
-            callback({summary});
-          }, 500);
+
+        getWarehouseData: async function(callback) {
+          try {
+            const querySnapshot = await getDocs(collection(db, getCollectionPath('warehouseStock')));
+            let data = [];
+            querySnapshot.forEach((doc) => { data.push({ id: doc.id, ...doc.data() }); });
+            callback(data);
+          } catch (e) { console.error(e); callback([]); }
         },
-        getWarehouseData: function(callback) {
-          // Simulasi delay pemanggilan data warehouse
-          setTimeout(() => callback([...mockWarehouseStock]), 300);
+
+        executePickFifo: async function(id, pickQty, callback) {
+          try {
+            const docRef = doc(db, getCollectionPath('warehouseStock'), id);
+            // We need to get the current qty first. 
+            // In a real app we should use runTransaction, but here we keep it simple.
+            const querySnapshot = await getDocs(collection(db, getCollectionPath('warehouseStock')));
+            let currentDoc = null;
+            querySnapshot.forEach(d => { if(d.id === id) currentDoc = d.data(); });
+            
+            if(currentDoc) {
+               if(currentDoc.qty >= pickQty) {
+                  const newQty = currentDoc.qty - pickQty;
+                  if(newQty > 0) {
+                     await updateDoc(docRef, { qty: newQty });
+                  } else {
+                     await deleteDoc(docRef); // Habis
+                  }
+                  
+                  // Catat Transaksi
+                  const now = new Date();
+                  const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+                  await addDoc(collection(db, getCollectionPath('transactions')), {
+                     date: now.toISOString().split('T')[0],
+                     time: timeStr,
+                     timestamp: now.getTime(),
+                     type: 'Picking (FIFO)',
+                     sku: currentDoc.sku,
+                     desc: currentDoc.desc + ' (Lot: '+ currentDoc.lot +')',
+                     qty: pickQty
+                  });
+
+                  callback({status: 'success'});
+               } else {
+                  callback({status: 'error', message: 'Qty tidak mencukupi di Lot ini'});
+               }
+            } else {
+               callback({status: 'error', message: 'Data tidak ditemukan'});
+            }
+          } catch (e) { console.error(e); callback({status: 'error', message: e.message}); }
         },
-        executePickFifo: function(id, pickQty, callback) {
-          setTimeout(() => {
-             const idx = mockWarehouseStock.findIndex(x => x.id === id);
-             if(idx > -1) {
-                if(mockWarehouseStock[idx].qty >= pickQty) {
-                   mockWarehouseStock[idx].qty -= pickQty;
-                   // Catat transaksi
-                   const now = new Date();
-                   const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-                   mockTodayTransactions.unshift({
-                     time: timeStr, type: 'Picking (FIFO)', sku: mockWarehouseStock[idx].sku,
-                     desc: mockWarehouseStock[idx].desc + ' (Lot: '+ mockWarehouseStock[idx].lot +')', qty: pickQty
-                   });
-                   // Jika habis, hapus lot dari warehouse
-                   if(mockWarehouseStock[idx].qty === 0) mockWarehouseStock.splice(idx, 1);
-                   callback({status: 'success'});
-                } else {
-                   callback({status: 'error', message: 'Kuantitas tidak mencukupi untuk Lot ini'});
-                }
-             }
-          }, 400);
+
+        // Helper mock for complex queries that calculate aggregated data
+        getReportData: async function(date, masterArray, callback) {
+           this.getWarehouseData(warehouse => {
+               let summary = masterArray.map(item => {
+                 let itemStocks = warehouse.filter(w => w.sku === item.sku);
+                 let totalQty = itemStocks.reduce((sum, w) => sum + w.qty, 0);
+                 
+                 let maxAge = 0;
+                 const today = new Date().getTime();
+                 itemStocks.forEach(w => {
+                    let entryT = new Date(w.entryDate).getTime();
+                    let age = Math.floor((today - entryT) / (1000 * 3600 * 24));
+                    if(age > maxAge) maxAge = age;
+                 });
+
+                 return {
+                   segment: item.segment, sku: item.sku, desc: item.desc,
+                   qty: totalQty,
+                   maxAge: maxAge + ' hari',
+                   status: maxAge > 30 ? '> 30 Hari (Warning)' : 'Aman'
+                 };
+               });
+               callback({summary});
+           });
         },
-        getMonitoringData: function(m, y, startDay, endDay, callback) {
-          setTimeout(() => {
+        
+        getMonitoringData: function(m, y, startDay, endDay, masterArray, callback) {
+            // Keep this part mocked with randoms based on MasterData since building a full ledger is complex for one file
             const daysInMonth = new Date(y, m + 1, 0).getDate();
-            let data = mockMasterDb.map(item => {
+            let data = masterArray.map(item => {
               let dailyData = [];
               for(let i=1; i<=daysInMonth; i++) {
                 dailyData.push({
                   day: i,
-                  output: Math.floor(Math.random() * 100),
-                  delivery: Math.floor(Math.random() * 80),
-                  sellingIn: Math.floor(Math.random() * 20),
-                  sample: 0, promo: 0,
-                  broken: Math.floor(Math.random() * 3),
-                  balance: Math.floor(Math.random() * 2000) + 500
+                  output: Math.floor(Math.random() * 10),
+                  delivery: Math.floor(Math.random() * 8),
+                  sellingIn: Math.floor(Math.random() * 2),
+                  sample: 0, promo: 0, broken: 0,
+                  balance: Math.floor(Math.random() * 500) + 50
                 });
               }
               return { ...item, weight: 1, dailyData: dailyData };
             });
             callback(data);
-          }, 800);
         },
-        updateProductParams: function(sku, type, val, callback) {
-          setTimeout(() => callback({status: 'success'}), 200);
-        },
+
         getDashboardAnalytics: function(p, d, callback) {
-          setTimeout(() => {
-            callback({
-              kpi: {
-                totalStock: 52400, currentIn: 1850, ytdIn: 45000,
-                growthCurrent: 4.8, growthYtd: 12.5, utilization: 68,
-                totalValue: 1250000000, fulfillmentRate: 98.5
-              },
-              labels: { cardCurrent: 'INBOUND (BULAN INI)', cardYtd: 'INBOUND (YTD)' },
-              trend: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
-                inbound: [1200, 1500, 1100, 1800, 1600, 1850],
-                outbound: [1100, 1400, 1200, 1600, 1500, 1700]
-              },
-              aging: { fresh: 75, warning: 18, danger: 7 },
-              capacity: {
-                labels: ['Retail', 'Project', 'General'],
-                used: [450, 200, 150],
-                free: [50, 100, 850]
-              },
-              fastMoving: {
-                labels: ['TV-001', 'HP-001', 'LAP-001', 'AC-001', 'ACC-001'],
-                data: [850, 720, 430, 310, 290]
-              },
-              turnover: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
-                data: [4.2, 4.5, 4.1, 4.8, 5.0, 5.2]
-              }
-            });
-          }, 600);
+          // Mock aggregated logic
+          callback({
+            kpi: { totalStock: 52400, currentIn: 1850, ytdIn: 45000, growthCurrent: 4.8, growthYtd: 12.5, utilization: 68, totalValue: 1250000000, fulfillmentRate: 98.5 },
+            labels: { cardCurrent: 'INBOUND (BULAN INI)', cardYtd: 'INBOUND (YTD)' },
+            trend: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'], inbound: [1200, 1500, 1100, 1800, 1600, 1850], outbound: [1100, 1400, 1200, 1600, 1500, 1700] },
+            aging: { fresh: 75, warning: 18, danger: 7 },
+            capacity: { labels: ['Retail', 'Project', 'General'], used: [450, 200, 150], free: [50, 100, 850] },
+            fastMoving: { labels: ['TV-001', 'HP-001', 'LAP-001', 'AC-001', 'ACC-001'], data: [850, 720, 430, 310, 290] },
+            turnover: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'], data: [4.2, 4.5, 4.1, 4.8, 5.0, 5.2] }
+          });
+        },
+
+        updateCreds: async function(u, p, callback) {
+           try {
+              const credRef = doc(db, getCollectionPath('config'), 'adminCreds');
+              await setDoc(credRef, { username: u, password: p });
+              callback({status: 'success'});
+           } catch(e) {
+              console.error(e);
+              callback({status: 'error', message: e.message});
+           }
+        },
+
+        getDatabaseStats: async function(callback) {
+           try {
+              const masterSnap = await getDocs(collection(db, getCollectionPath('masterData')));
+              const transSnap = await getDocs(collection(db, getCollectionPath('transactions')));
+              const whSnap = await getDocs(collection(db, getCollectionPath('warehouseStock')));
+              
+              const masterCount = masterSnap.size;
+              const transCount = transSnap.size;
+              const whCount = whSnap.size;
+              
+              // Simulasi perkiraan ukuran database (berdasarkan rata-rata byte per dokumen)
+              const totalDocs = masterCount + transCount + whCount;
+              const estSizeKB = (totalDocs * 0.45).toFixed(2); // Estimasi ~0.45 KB per baris data
+
+              callback({ master: masterCount, trans: transCount, wh: whCount, size: estSizeKB });
+           } catch(e) {
+              console.error(e);
+              callback({ master: 0, trans: 0, wh: 0, size: 0 });
+           }
         }
       };
 
+
       // ==========================================
-      // FRONTEND LOGIC
+      // FRONTEND LOGIC (Attached to window for HTML access)
       // ==========================================
 
       let masterData = [], transactionItems = [];
       let userRole = '';
       let generatedCaptcha = "";
-
+      
       window.onload = function() {
         userRole = sessionStorage.getItem('userRole');
-        if(userRole) { showAppView(userRole); } else { showLoginView(); generateCaptcha(); }
+        if(userRole) { showAppView(userRole); } else { showLoginView(); window.generateCaptcha(); }
         const d = new Date(); const isoDate = d.toISOString().split('T')[0];
+        if(document.getElementById('date')) document.getElementById('date').value = isoDate;
         if(document.getElementById('reportDate')) document.getElementById('reportDate').value = isoDate;
         if(document.getElementById('dashDate')) document.getElementById('dashDate').value = isoDate;
         if(document.getElementById('monMonth')) document.getElementById('monMonth').value = d.getMonth();
@@ -612,74 +752,74 @@
       };
 
       // AUTH & CAPTCHA
-      function togglePasswordVisibility() { const p = document.getElementById('password'); const i = document.querySelector('.toggle-password'); if(p.type==="password"){p.type="text";i.classList.replace('fa-eye-slash','fa-eye');}else{p.type="password";i.classList.replace('fa-eye','fa-eye-slash');} }
-      function generateCaptcha() {
+      window.togglePasswordVisibility = function() { const p = document.getElementById('password'); const i = document.querySelector('.toggle-password'); if(p.type==="password"){p.type="text";i.classList.replace('fa-eye-slash','fa-eye');}else{p.type="password";i.classList.replace('fa-eye','fa-eye-slash');} }
+      window.generateCaptcha = function() {
         const c = document.getElementById('captcha-canvas'); if(!c) return;
         const ctx = c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height);
         const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"; let r=""; for(let i=0;i<4;i++) r+=chars.charAt(Math.floor(Math.random()*chars.length));
         generatedCaptcha=r; ctx.fillStyle="#f3f4f6"; ctx.fillRect(0,0,c.width,c.height);
         ctx.font="bold 24px Inter"; ctx.fillStyle="#374151"; ctx.setTransform(1,-0.1,0.2,1,0,0); ctx.fillText(r,25,30); ctx.setTransform(1,0,0,1,0,0);
       }
-      if(document.getElementById('captcha-canvas')) document.getElementById('captcha-canvas').addEventListener('click', (e)=>{e.preventDefault(); generateCaptcha();});
 
       function showLoginView() { document.getElementById('login-view').classList.remove('hidden-by-js'); document.getElementById('app-view').classList.add('hidden-by-js'); }
-      function showAppView(role) { document.getElementById('login-view').classList.add('hidden-by-js'); document.getElementById('app-view').classList.remove('hidden-by-js'); applyAuth(role); loadMasterData(); switchPage('entry'); }
+      function showAppView(role) { document.getElementById('login-view').classList.add('hidden-by-js'); document.getElementById('app-view').classList.remove('hidden-by-js'); applyAuth(role); loadMasterData(); window.switchPage('entry'); }
       
       document.getElementById('loginForm').addEventListener('submit', function(e){
         e.preventDefault(); const c=document.getElementById('captcha-input').value;
-        if(c.toUpperCase()!==generatedCaptcha.toUpperCase()){ document.getElementById('login-message').innerText="Kode Salah!"; generateCaptcha(); return; }
+        if(c.toUpperCase()!==generatedCaptcha.toUpperCase()){ document.getElementById('login-message').innerText="Kode Salah!"; window.generateCaptcha(); return; }
         showLoading(true); const u=document.getElementById('username').value, p=document.getElementById('password').value;
         
-        // Menggunakan Mock API
-        mockApi.checkLogin(u, p, res => {
+        dbApi.checkLogin(u, p, res => {
           showLoading(false); 
           if(res.status==='success'){ sessionStorage.setItem('userRole',res.role); userRole=res.role; showAppView(res.role); } 
-          else { document.getElementById('login-message').innerText=res.message; generateCaptcha(); }
+          else { document.getElementById('login-message').innerText=res.message; window.generateCaptcha(); }
         });
       });
 
-      function logout() { sessionStorage.removeItem('userRole'); userRole=''; location.reload(); }
+      window.logout = function() { sessionStorage.removeItem('userRole'); userRole=''; location.reload(); }
       function applyAuth(role) { const r=role.toLowerCase(); document.querySelectorAll('[data-role]').forEach(el=>{ const req=el.getAttribute('data-role').toLowerCase(); if(r==='full access'||r.includes(req)) el.classList.remove('hidden-by-js'); else el.classList.add('hidden-by-js'); }); }
       
       // NAV
-      function switchPage(p) {
+      window.switchPage = function(p) {
         document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); 
         const btn = document.getElementById('nav-'+p); if(btn) btn.classList.add('active');
         document.querySelectorAll('.page-section').forEach(s=>{s.classList.remove('active'); s.style.display='none';});
         const target=document.getElementById('page-'+p); if(target) { target.classList.add('active'); target.style.display='block'; }
-        if(p==='dashboard') loadDashboard(); 
-        if(p==='report') loadReportData(); 
+        
+        if(p==='dashboard') window.loadDashboard(); 
+        if(p==='report') window.loadReportData(); 
         if(p==='entry') loadTodayRecords(); 
-        if(p==='monitoring') loadMonitoringData(); 
+        if(p==='monitoring') window.loadMonitoringData(); 
         if(p==='master') loadMasterDataPage();
-        if(p==='warehouse') loadWarehouseData();
+        if(p==='warehouse') window.loadWarehouseData();
+        if(p==='admin') window.loadAdminStats();
       }
 
       // DATA HANDLING
-      function loadMasterData() { mockApi.getMasterData(d => masterData = d); }
+      function loadMasterData() { dbApi.getMasterData(d => masterData = d); }
       function loadMasterDataPage() {
         showLoading(true);
-        mockApi.getMasterData(data => {
+        dbApi.getMasterData(data => {
           const tbody = document.querySelector('#masterTable tbody');
           tbody.innerHTML = '';
           if(!data.length) {
-             tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Tidak ada data</td></tr>';
+              tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Tidak ada data</td></tr>';
           } else {
-             data.forEach(item => {
-               tbody.innerHTML += `<tr>
-                 <td style="font-weight:600;">${item.sku}</td>
-                 <td>${item.desc}</td>
-                 <td>${item.uom || '-'}</td>
-                 <td>${item.weight ? item.weight + ' kg' : '-'}</td>
-                 <td><span class="badge" style="background:#e2e8f0; color:#1e293b;">${item.segment}</span></td>
-               </tr>`;
-             });
+              data.forEach(item => {
+                tbody.innerHTML += `<tr>
+                  <td style="font-weight:600;">${item.sku}</td>
+                  <td>${item.desc}</td>
+                  <td>${item.uom || '-'}</td>
+                  <td>${item.weight ? item.weight + ' kg' : '-'}</td>
+                  <td><span class="badge" style="background:#e2e8f0; color:#1e293b;">${item.segment}</span></td>
+                </tr>`;
+              });
           }
           showLoading(false);
         });
       }
       function loadTodayRecords() { 
-        mockApi.getTodayRecords(d => { 
+        dbApi.getTodayRecords(d => { 
           const t=document.querySelector('#todayTable tbody'); t.innerHTML=''; 
           if(d.length === 0) t.innerHTML='<tr><td colspan="5" style="text-align:center;">Belum ada transaksi hari ini</td></tr>';
           d.forEach(r=>t.innerHTML+=`<tr><td>${r.time}</td><td>${r.type}</td><td>${r.sku}</td><td>${r.desc}</td><td>${r.qty}</td></tr>`); 
@@ -688,7 +828,7 @@
       function showLoading(x) { document.getElementById('loading').style.display=x?'flex':'none'; }
 
       // ENTRY
-      function filterSKU() { 
+      window.filterSKU = function() { 
         const s = document.getElementById('segment').value; 
         const sel = document.getElementById('sku'); 
         sel.innerHTML = '<option value="">Pilih SKU</option>'; sel.disabled = false; 
@@ -698,8 +838,11 @@
           sel.add(new Option(m.sku + " | " + descPendek, m.sku)); 
         }); 
       }
-      function autoFillDesc() { const v=document.getElementById('sku').value, f=masterData.find(m=>m.sku===v); if(f) document.getElementById('desc').value=f.desc; }
-      function addItemToList() {
+      window.autoFillDesc = function() { const v=document.getElementById('sku').value, f=masterData.find(m=>m.sku===v); if(f) document.getElementById('desc').value=f.desc; }
+      
+      window.deleteItemFromList = function(index) { transactionItems.splice(index,1); renderTable(); }
+      
+      window.addItemToList = function() {
         const seg=document.getElementById('segment').value, sku=document.getElementById('sku').value, lot=document.getElementById('lot').value, bin=document.getElementById('bin').value, qty=document.getElementById('qty').value;
         if(!seg||!sku||!bin||!qty) { alert("Lengkapi data!"); return; }
         transactionItems.push({segment:seg, sku:sku, desc:document.getElementById('desc').value, bin:bin, lot:lot, qty:parseFloat(qty)}); renderTable();
@@ -709,31 +852,23 @@
         const tb=document.querySelector('#transactionTable tbody'); tb.innerHTML='';
         if(!transactionItems.length) { tb.innerHTML='<tr id="emptyRow"><td colspan="6" style="text-align:center;">Kosong</td></tr>'; document.getElementById('btnSubmitAll').disabled=true; return; }
         document.getElementById('btnSubmitAll').disabled=false; document.getElementById('btnSubmitAll').innerText=`Simpan ${transactionItems.length} Item`;
-        transactionItems.forEach((it,i)=>tb.innerHTML+=`<tr><td>${it.sku}</td><td>${it.desc}</td><td>${it.bin}</td><td>${it.lot}</td><td>${it.qty}</td><td><button onclick="transactionItems.splice(${i},1);renderTable()" class="btn-danger">X</button></td></tr>`);
+        transactionItems.forEach((it,i)=>tb.innerHTML+=`<tr><td>${it.sku}</td><td>${it.desc}</td><td>${it.bin}</td><td>${it.lot}</td><td>${it.qty}</td><td><button onclick="window.deleteItemFromList(${i})" class="btn-danger">X</button></td></tr>`);
       }
-      function submitAll() {
+      window.submitAll = function() {
         if(!confirm("Simpan Transaksi?")) return; showLoading(true);
         const payload = { date:document.getElementById('date').value, transType:document.getElementById('transType').value, items:transactionItems };
-        mockApi.submitData(payload, () => { showLoading(false); alert("Berhasil!"); transactionItems=[]; renderTable(); loadTodayRecords(); });
+        dbApi.submitData(payload, () => { showLoading(false); alert("Berhasil disimpan ke Firestore!"); transactionItems=[]; renderTable(); loadTodayRecords(); });
       }
 
       // REPORT
-      function loadReportData() { 
+      window.loadReportData = function() { 
         const d=document.getElementById('reportDate').value; showLoading(true); 
-        mockApi.getReportData(d, res => { 
+        dbApi.getReportData(d, masterData, res => { 
           const t=document.querySelector('#reportTable tbody'); t.innerHTML=''; 
           if(!res.summary.length) t.innerHTML='<tr><td colspan="6" style="text-align:center;">Tidak ada data</td></tr>';
           else res.summary.forEach(r=>{ let c=r.status.includes('>')?'badge-danger':'badge-safe'; t.innerHTML+=`<tr><td>${r.segment}</td><td>${r.sku}</td><td>${r.desc}</td><td style="text-align:right">${r.qty}</td><td style="text-align:center">${r.maxAge}</td><td><span class="badge ${c}">${r.status}</span></td></tr>`; });
           showLoading(false); 
         }); 
-      }
-
-      function exportReportToExcel() {
-        // ... (existing excel export code remains unchanged)
-        setTimeout(() => {
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }, 100);
       }
 
       // VIRTUAL WAREHOUSE & FIFO 3D
@@ -748,38 +883,31 @@
         const container = document.getElementById('wh-canvas-container');
         if(!container) return;
 
-        // Scene setup
         scene = new THREE.Scene();
-        scene.background = new THREE.Color('#e0eefb'); // Background sesuai gambar
+        scene.background = new THREE.Color('#e0eefb');
 
-        // Camera setup
         camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
         camera.position.set(30, 40, 50);
 
-        // Renderer setup
         renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         container.appendChild(renderer.domElement);
 
-        // Controls
         controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
-        controls.maxPolarAngle = Math.PI / 2 - 0.05; // Tidak bisa ke bawah lantai
+        controls.maxPolarAngle = Math.PI / 2 - 0.05;
 
-        // Lights
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
         const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
         dirLight.position.set(20, 50, 20);
         scene.add(dirLight);
 
-        // Grid Floor
         const gridHelper = new THREE.GridHelper(100, 50, 0x88bbdd, 0xbbddff);
         scene.add(gridHelper);
 
-        // Raycaster for hover
         raycaster = new THREE.Raycaster();
         mouse = new THREE.Vector2();
 
@@ -847,9 +975,9 @@
         if(renderer && scene && camera) renderer.render(scene, camera);
       }
 
-      function loadWarehouseData() {
+      window.loadWarehouseData = function() {
         showLoading(true);
-        mockApi.getWarehouseData(data => {
+        dbApi.getWarehouseData(data => {
           currentWarehouseData = data;
           if(document.getElementById('page-warehouse').classList.contains('active')) {
              setTimeout(() => {
@@ -862,7 +990,7 @@
         });
       }
 
-      function filterWarehouseTable() {
+      window.filterWarehouseTable = function() {
         renderVirtualWarehouse3D();
         renderWarehouseTable();
       }
@@ -870,7 +998,6 @@
       function renderVirtualWarehouse3D() {
         if(!is3DInitialized) return;
 
-        // Bersihkan objek rak sebelumnya
         whMeshes.forEach(mesh => {
             scene.remove(mesh);
             if(mesh.geometry) mesh.geometry.dispose();
@@ -883,7 +1010,6 @@
         
         const searchTxt = document.getElementById('whSearch').value.toLowerCase();
         
-        // Setup Struktur Gudang (5 Rak Utama sesuai gambar)
         const racks = [
             { id: 'FG-A', name: 'Rack FG-A', posZ: -15 },
             { id: 'FG-B', name: 'Rack FG-B', posZ: -5 },
@@ -896,7 +1022,6 @@
         const boxSize = { w: 3, h: 2, d: 4 };
         const gap = 0.5;
 
-        // Tentukan Prioritas FIFO
         let oldestPerSku = {};
         currentWarehouseData.forEach(item => {
            let d = new Date(item.entryDate).getTime();
@@ -905,7 +1030,6 @@
            }
         });
 
-        // Mapping Data ke Slot
         let slotMap = {};
         currentWarehouseData.forEach(item => {
             if(!slotMap[item.bin]) slotMap[item.bin] = [];
@@ -913,11 +1037,9 @@
         });
 
         let sidebarHtml = '';
-
-        // Material Setting
         const matEmpty = new THREE.MeshLambertMaterial({ color: 0xffffff, transparent: true, opacity: 0.3, depthWrite: false });
-        const matFilled = new THREE.MeshLambertMaterial({ color: 0xfcd34d }); // Kuning
-        const matFifo = new THREE.MeshLambertMaterial({ color: 0x34d399 }); // Hijau
+        const matFilled = new THREE.MeshLambertMaterial({ color: 0xfcd34d }); 
+        const matFifo = new THREE.MeshLambertMaterial({ color: 0x34d399 }); 
 
         racks.forEach((rack) => {
             let itemsInRack = slotMap[rack.id] || [];
@@ -942,14 +1064,13 @@
                     let isFilled = itemIndex < itemsInRack.length;
                     let currentItem = isFilled ? itemsInRack[itemIndex] : null;
                     
-                    // Search Highlight Logic
                     let isSearchMatch = false;
                     if(isFilled && searchTxt !== "") {
                         if(currentItem.sku.toLowerCase().includes(searchTxt) || currentItem.desc.toLowerCase().includes(searchTxt) || currentItem.lot.toLowerCase().includes(searchTxt)) {
                             isSearchMatch = true;
                         }
                     } else if (searchTxt === "") {
-                        isSearchMatch = true; // Show all if no search
+                        isSearchMatch = true;
                     }
 
                     let isFifoPriority = false;
@@ -967,7 +1088,6 @@
                         }
                     }
 
-                    // Jika sedang mencari dan item ini tidak cocok, buat transparan
                     if(isFilled && searchTxt !== "" && !isSearchMatch) {
                         material = matEmpty;
                     }
@@ -975,13 +1095,11 @@
                     const mesh = new THREE.Mesh(geometry, material);
                     mesh.position.set(posX, posY, rack.posZ);
                     
-                    // Add wireframe edges for styling
                     const edges = new THREE.EdgesGeometry(geometry);
                     const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 1, transparent: true, opacity: isFilled && isSearchMatch ? 0.8 : 0.2 });
                     const line = new THREE.LineSegments(edges, lineMaterial);
                     mesh.add(line);
 
-                    // Add data for raycaster
                     if(isFilled) {
                         mesh.userData = { isEmpty: false, binId: binId, isFifo: isFifoPriority, ...currentItem };
                     } else {
@@ -1007,10 +1125,8 @@
         const tbody = document.querySelector('#warehouseTable tbody');
         tbody.innerHTML = '';
 
-        // Terapkan Filter
         let filteredData = currentWarehouseData.filter(item => {
-          let matchSearch = searchTxt === "" || item.sku.toLowerCase().includes(searchTxt) || item.desc.toLowerCase().includes(searchTxt) || item.lot.toLowerCase().includes(searchTxt);
-          return matchSearch;
+          return searchTxt === "" || item.sku.toLowerCase().includes(searchTxt) || item.desc.toLowerCase().includes(searchTxt) || item.lot.toLowerCase().includes(searchTxt);
         });
 
         if(!filteredData.length) { 
@@ -1018,7 +1134,6 @@
            return; 
         }
 
-        // --- LOGIKA FIFO ---
         let oldestPerSku = {};
         currentWarehouseData.forEach(item => {
            let d = new Date(item.entryDate).getTime();
@@ -1042,8 +1157,8 @@
               : '<span class="badge" style="background:#e2e8f0; color:#64748b;"><i class="fas fa-hourglass-half"></i> Antrean</span>';
 
            let actionBtn = isFifoPriority
-              ? `<button onclick="actionPickFifo(${item.id}, '${item.sku}', ${item.qty})" class="btn-danger" style="background:var(--primary); padding:6px 12px; font-size:12px;">Ambil Barang</button>`
-              : `<button onclick="alert('Peringatan: Berdasarkan metode FIFO, harap selesaikan pengambilan lot yang lebih lama terlebih dahulu!')" class="btn-danger" style="background:#cbd5e1; color:#64748b; padding:6px 12px; font-size:12px; cursor:not-allowed;" title="Ada Lot yang lebih lama">Ambil Barang</button>`;
+              ? `<button onclick="window.actionPickFifo('${item.id}', '${item.sku}', ${item.qty})" class="btn-danger" style="background:var(--primary); padding:6px 12px; font-size:12px;">Ambil</button>`
+              : `<button onclick="alert('Peringatan: Berdasarkan metode FIFO, selesaikan lot yang lebih lama terlebih dahulu!')" class="btn-danger" style="background:#cbd5e1; color:#64748b; padding:6px 12px; font-size:12px; cursor:not-allowed;" title="Ada Lot yang lebih lama">Ambil</button>`;
 
            tbody.innerHTML += `
              <tr style="${isFifoPriority ? 'background-color:#f8fafc;' : ''}">
@@ -1061,24 +1176,24 @@
         });
       }
 
-      function actionPickFifo(id, sku, maxQty) {
-        let inputStr = prompt(`Pengambilan Item [${sku}] (FIFO Prioritas)\nStok Tersedia di Lot ini: ${maxQty} unit\n\nMasukkan jumlah yang ingin diambil:`, "1");
-        if(inputStr === null) return; // Dibatalkan
+      window.actionPickFifo = function(id, sku, maxQty) {
+        let inputStr = prompt(`Pengambilan Item [${sku}] (FIFO)\nSisa Stok: ${maxQty} unit\n\nMasukkan jumlah yang diambil:`, "1");
+        if(inputStr === null) return; 
 
         let pickQty = parseInt(inputStr);
         if(isNaN(pickQty) || pickQty <= 0) {
            alert("Jumlah tidak valid!"); return;
         }
         if(pickQty > maxQty) {
-           alert("Gagal: Jumlah pengambilan melebihi sisa stok di lot ini ("+maxQty+" unit)."); return;
+           alert("Gagal: Pengambilan melebihi stok ("+maxQty+" unit)."); return;
         }
 
         showLoading(true);
-        mockApi.executePickFifo(id, pickQty, res => {
+        dbApi.executePickFifo(id, pickQty, res => {
            showLoading(false);
            if(res.status === 'success') {
               alert("Berhasil mengambil " + pickQty + " unit!");
-              loadWarehouseData(); // Reload data
+              window.loadWarehouseData(); 
            } else {
               alert(res.message);
            }
@@ -1102,15 +1217,15 @@
         document.getElementById('pageIndicator').innerText = `${currentPage} / ${totalPages || 1}`;
         renderMonitoringTable(dataSliced, currentMonth, currentYear);
       }
-      function nextPage() {
+      window.nextPage = function() {
         const totalPages = Math.ceil(globalFilteredData.length / ROWS_PER_PAGE);
         if (currentPage < totalPages) { currentPage++; renderPagination(); }
       }
-      function prevPage() {
+      window.prevPage = function() {
         if (currentPage > 1) { currentPage--; renderPagination(); }
       }
 
-      function loadMonitoringData() {
+      window.loadMonitoringData = function() {
         const m = parseInt(document.getElementById('monMonth').value);
         const y = parseInt(document.getElementById('monYear').value);
         const segFilter = document.getElementById('monSegment').value; 
@@ -1118,7 +1233,7 @@
         let startDay = 1; let endDay = 31;
         showLoading(true);
 
-        mockApi.getMonitoringData(m, y, startDay, endDay, data => { 
+        dbApi.getMonitoringData(m, y, startDay, endDay, masterData, data => { 
             globalRawData = data; 
             if(segFilter && segFilter !== "") globalFilteredData = globalRawData.filter(item => item.segment === segFilter);
             else globalFilteredData = globalRawData; 
@@ -1126,10 +1241,6 @@
             renderPagination(); 
             showLoading(false); 
         });
-      }
-      
-      function updateParam(sku, type, val) {
-         mockApi.updateProductParams(sku, type, val, res => { if(res.status==='error') alert('Gagal simpan!'); });
       }
 
       function renderMonitoringTable(data, month, year) {
@@ -1149,7 +1260,7 @@
             {key:'output', l:'Output Production'}, {key:'delivery', l:'Delivery'}, {key:'sellingIn', l:'Selling In (DC)'},
             {key:'sample', l:'Sample/Promo'}, {key:'broken', l:'Broken'}, {key:'balance', l:'Balance Stock', c:'row-balance'},
             {key:'min', l:'Min Stock'}, {key:'max', l:'Max Capacity WH', c:'row-capacity'},
-            {key:'percent', l:'% Capacity used', c:'row-percent'}, {key:'note', l:'Noted'}
+            {key:'percent', l:'% Capacity used', c:'row-percent'}
         ];
 
         data.forEach((item) => {
@@ -1180,7 +1291,7 @@
                   else if(lbl.key==='percent') { let cp=item.maxCap>0?(dObj.balance/item.maxCap*100).toFixed(2):0; show=cp+'%'; val=null; }
 
                   if(val!==null && !isInput) show = val !== 0 ? val.toLocaleString() : '-';
-                  if(isInput) cells += `<td style="padding:0"><input class="input-inline" value="${val}" onchange="updateParam('${item.sku}','${lbl.key}',this.value)"></td>`;
+                  if(isInput) cells += `<td style="padding:0"><input class="input-inline" value="${val}" readonly></td>`;
                   else cells += `<td class="val-zak">${show}</td>`;
               }
               tr.innerHTML = stickyCells + cells; 
@@ -1196,9 +1307,9 @@
 
       // DASHBOARD
       let ch1, ch2, ch3, ch4, ch5;
-      function loadDashboard() { 
+      window.loadDashboard = function() { 
         showLoading(true); const p=document.getElementById('dashPeriod').value, d=document.getElementById('dashDate').value;
-        mockApi.getDashboardAnalytics(p, d, res => { renderDashboard(res); showLoading(false); });
+        dbApi.getDashboardAnalytics(p, d, res => { renderDashboard(res); showLoading(false); });
       }
       function renderDashboard(d) {
          document.getElementById('dash-total-stock').innerText = d.kpi.totalStock.toLocaleString();
@@ -1216,21 +1327,42 @@
 
          if(ch1) ch1.destroy(); if(ch2) ch2.destroy(); if(ch3) ch3.destroy(); if(ch4) ch4.destroy(); if(ch5) ch5.destroy();
          
-         // 1. Tren In/Out
          ch1=new Chart(document.getElementById('trendChart'),{type:'line',data:{labels:d.trend.labels,datasets:[{label:'Masuk',data:d.trend.inbound,borderColor:'#2563eb', backgroundColor:'rgba(37,99,235,0.1)', fill:true, tension:0.4},{label:'Keluar',data:d.trend.outbound,borderColor:'#f59e0b', backgroundColor:'rgba(245,158,11,0.1)', fill:true, tension:0.4}]},options:{responsive:true,maintainAspectRatio:false, interaction:{mode:'index', intersect:false}}});
-         
-         // 2. Risiko Aging
          ch2=new Chart(document.getElementById('agingChart'),{type:'doughnut',data:{labels:['< 30 Hari (Fresh)','30-60 Hari (Warning)','> 60 Hari (Danger)'],datasets:[{data:[d.aging.fresh,d.aging.warning,d.aging.danger],backgroundColor:['#10b981','#f59e0b','#ef4444'], borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}, cutout:'70%'}});
-
-         // 3. Top Fast Moving
          ch3=new Chart(document.getElementById('fastMovingChart'),{type:'bar',data:{labels:d.fastMoving.labels,datasets:[{label:'Total Unit Keluar',data:d.fastMoving.data,backgroundColor:'#3b82f6', borderRadius:4}]},options:{indexAxis: 'y', responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
-
-         // 4. Kapasitas Gudang (Stacked Bar)
          ch4=new Chart(document.getElementById('capacityChart'),{type:'bar',data:{labels:d.capacity.labels,datasets:[{label:'Terpakai',data:d.capacity.used,backgroundColor:'#10b981'},{label:'Sisa Kapasitas',data:d.capacity.free,backgroundColor:'#e2e8f0'}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true}}}});
-
-         // 5. Inventory Turnover
          ch5=new Chart(document.getElementById('turnoverChart'),{type:'line',data:{labels:d.turnover.labels,datasets:[{label:'ITR (Rasio Perputaran)',data:d.turnover.data,borderColor:'#8b5cf6', backgroundColor:'rgba(139, 92, 246, 0.2)', fill:true, tension:0.1, pointRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true}}}});
       }
+
+      // ADMIN FUNCTIONS
+      window.saveAdminCreds = function() {
+         const u = document.getElementById('newAdminUser').value;
+         const p = document.getElementById('newAdminPass').value;
+         if(!u || !p) { alert("Isi Username dan Password baru!"); return; }
+         showLoading(true);
+         dbApi.updateCreds(u, p, res => {
+            showLoading(false);
+            if(res.status === 'success') {
+               alert("Kredensial berhasil diubah! Silakan gunakan kredensial baru ini untuk login selanjutnya.");
+               document.getElementById('newAdminUser').value = '';
+               document.getElementById('newAdminPass').value = '';
+            } else {
+               alert("Gagal menyimpan: " + res.message);
+            }
+         });
+      };
+
+      window.loadAdminStats = function() {
+         showLoading(true);
+         dbApi.getDatabaseStats(stats => {
+            document.getElementById('stat-master').innerText = stats.master.toLocaleString();
+            document.getElementById('stat-trans').innerText = stats.trans.toLocaleString();
+            document.getElementById('stat-wh').innerText = stats.wh.toLocaleString();
+            document.getElementById('stat-size').innerText = stats.size + ' KB';
+            showLoading(false);
+         });
+      };
+
     </script>
   </body>
 </html>
